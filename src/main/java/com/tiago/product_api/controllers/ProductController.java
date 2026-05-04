@@ -28,4 +28,9 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(productSave);
     }
+
+    @GetMapping("/{id}")
+    public Product findById(@PathVariable Long id){
+        return service.findById(id);
+    }
 }
