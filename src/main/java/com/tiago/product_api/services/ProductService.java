@@ -22,7 +22,7 @@ public class ProductService {
 
     public Product save(Product product){
         if (product == null){
-            throw new IllegalArgumentException("O produto não poder nulo");
+            throw new IllegalArgumentException("O produto não pode ser nulo");
         }
         return  repository.save(product);
     }
@@ -30,5 +30,28 @@ public class ProductService {
     public Product findById(Long id){
          return repository.findById(id).orElseThrow(() -> new ResponseStatusException(
                  HttpStatus.NOT_FOUND, "Produto não encontrado com o id: " + id));
+    }
+
+    public Product update (Long id, Product product){
+         Product productDb  = findById(id);
+
+        if(product.getName() != null){
+            productDb .setName(product.getName());
+        }
+
+        if(product.getPrice()!= null){
+            productDb .setPrice(product.getPrice());
+        }
+        return repository.save(productDb );
+    }
+
+    public void deleteById(Long id){
+         if(id == null){
+             throw new IllegalArgumentException("O id não pode ser nulo");
+         }
+
+         Product productDb = findById(id);
+
+         repository.delete(productDb);
     }
 }

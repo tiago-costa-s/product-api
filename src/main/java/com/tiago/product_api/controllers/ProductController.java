@@ -2,6 +2,7 @@ package com.tiago.product_api.controllers;
 
 import com.tiago.product_api.entities.Product;
 import com.tiago.product_api.services.ProductService;
+import jakarta.persistence.PostUpdate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,16 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product findById(@PathVariable Long id){
         return service.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Product update(@PathVariable Long id, @RequestBody Product product){
+        return service.update(id, product);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id){
+        service.deleteById(id);
+       return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
